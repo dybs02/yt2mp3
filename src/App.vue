@@ -1,9 +1,15 @@
 <template>
-  <HelloWorld />
+  <FileSelector />
+  <div class="mt-8 md:flex">
+    <FileProperties class="md:w-2/3" />
+    <CoverEditor class="md:w-1/3" style="border: 1px solid pink;"/>
+  </div>
 </template>
 
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import FileSelector from './components/FileSelector.vue'
+import FileProperties from './components/FileProperties.vue';
+import CoverEditor from './components/CoverEditor.vue';
 
 </script>
 
