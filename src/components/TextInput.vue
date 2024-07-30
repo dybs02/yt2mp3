@@ -1,6 +1,6 @@
 <template>
   <div class="my-2">
-    <label :for=property class="px-3 pb-2 rounded-md prop-label">{{ property }}</label>
+    <label :for=property class="px-3 pb-2 rounded-md capitalize bg-color">{{ property }}</label>
     <div>
       <input type="text" :id=property class="w-full"/>
     </div>
@@ -20,10 +20,5 @@ defineProps({
 </script>
 
 <style scoped>
-
-.prop-label {
-  background-color: #1b1b1b;
-  text-transform: capitalize;
-}
 
 </style>
