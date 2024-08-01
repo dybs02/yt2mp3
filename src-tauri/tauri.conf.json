@@ -12,7 +12,32 @@
   },
   "tauri": {
     "allowlist": {
-      "all": false
+      "path": {
+        "all": true
+      },
+      "shell": {
+        "sidecar": true,
+        "scope": [
+          {
+            "name": "bin/yt-dlp",
+            "sidecar": true,
+            "args": [
+              {
+                "validator": ".+"
+              }
+            ]
+          },
+          {
+            "name": "bin/ffmpeg",
+            "sidecar": true,
+            "args": [
+              {
+                "validator": ".+"
+              }
+            ]
+          }
+        ]
+      }
     },
     "bundle": {
       "active": true,
@@ -21,7 +46,10 @@
       "deb": {
         "depends": []
       },
-      "externalBin": [],
+      "externalBin": [
+        "bin/yt-dlp",
+        "bin/ffmpeg"
+      ],
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",

@@ -1,0 +1,7 @@
+Binary filename format: [binary name]-[host]
+How to check host?
+$ rustc -Vv
+
+Include following binaries in correct format:
+yt-dlp: https://github.com/yt-dlp/yt-dlp/releases
+ffmpeg: https://www.ffmpeg.org/download.html
