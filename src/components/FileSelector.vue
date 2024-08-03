@@ -3,10 +3,11 @@
     <input type="text" v-model="link" placeholder="YouTube url" class="w-full px-4 rounded-md"/>
     <button @click="download" class="ml-4">Download</button>
     <FileSelect
-      v-model="file"
+      v-model="filename"
       text="Select File"
-      accepted_types=".mp3"
-      @change="openFile"
+      filterName="MP3 files"
+      :extensions="['mp3']"
+      @file-selected="openFile"
       class="ml-4"
     />
     
@@ -18,20 +19,16 @@ import { ref } from 'vue';
 import FileSelect from './input/FileInput.vue';
 
 const link = ref('')
-const file = ref<File>()
+const filename = ref<string>()
 
 const download = () => {
   console.log('Downloading: ', link.value)
   // TODO download & open with file()
 }
 
-const openFile = () => {
-  if (!file.value) {
-    return
-  }
-
-  console.log('Editing file: ', file.value)
-  // TODO open file
+const openFile = async (fn: string) => {
+  filename.value = fn;
+  console.log('Editing file: ', filename.value)
 }
 
 

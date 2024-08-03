@@ -1,43 +1,47 @@
 <template>
   <div>
-    <button>
-      <label class="whitespace-nowrap">
-        <input
-          ref="input"
-          type="file"
-          :accept=accepted_types
-          @change="loadFile($event)"
-          class="file-input"
-        />
-        {{ text }}
-      </label>
+    <button @click="select" class="whitespace-nowrap">
+      {{ text }}
     </button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps } from 'vue'
+import { defineProps } from 'vue'
+import { open } from '@tauri-apps/api/dialog';
 
-defineProps({
+const props = defineProps({
   text: {
     type: String,
     required: true
   },
-  accepted_types: {
+  filterName: {
     type: String,
+    required: true
+  },
+  extensions: {
+    type: Array<string>,
     required: true
   }
 })
 
-const input = ref<any>(null);
-const fileModel = defineModel()
+const emit = defineEmits<{
+  (e: 'file-selected', filename: string): void
+}>()
 
-const loadFile = (e: Event) => {
-  const target = e.target as HTMLInputElement;
+const select = async () => {
+  const selected = await open({
+    multiple: false,
+    filters: [{
+      name: props.filterName,
+      extensions: props.extensions
+    }]
+  });
 
-  const file = target.files?.item(0);
-  if (file) {
-    fileModel.value = file;
+  if (selected === null || Array.isArray(selected)) {
+    return;
+  } else {
+    emit('file-selected', selected);
   }
 }
 
@@ -45,9 +49,5 @@ const loadFile = (e: Event) => {
 </script>
 
 <style scoped>
-
-.file-input {
-  display: none;
-}
 
 </style>

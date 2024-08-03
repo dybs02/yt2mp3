@@ -3,13 +3,13 @@
     <h2 class="text-2xl font-semibold my-4">Cover Image</h2>
     <div class="flex rounded-md bg-color-dark mb-2">
       <FileSelect
-        v-model="file"
         text="Select Cover"
-        accepted_types="image/*"
-        @change="openFile"
+        filterName="Images"
+        :extensions="['png', 'jpg', 'jpeg']"
+        @file-selected="openFile"
       />
-      <div class="w-full truncate my-auto px-2" v-bind:title="file?.name">
-        {{ file?.name }}
+      <div class="w-full truncate my-auto px-2" v-bind:title="filename">
+        {{ filename }}
       </div>
     </div>
 
@@ -41,7 +41,7 @@ import VueCropper from 'vue-cropperjs';
 import FileSelect from './input/FileInput.vue';
 
 
-const file = ref<File>()
+const filename = ref<string>()
 const cropper = ref<any>(null);
 const isFileSelected = ref(false);
 const aspectRatio = ref(true);
@@ -55,16 +55,18 @@ const ready = () => {
   console.log('ready');
 }
 
-const openFile = () => {
-  if (file.value) {
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-      isFileSelected.value = true;
-      await nextTick()
-      cropper.value.replace(e.target?.result as string);
-    }
-    reader.readAsDataURL(file.value);
-  }
+const openFile = async (fn: string) => {
+  filename.value = fn;
+  console.log('Editing file: ', filename.value)
+  // if (file.value) {
+  //   const reader = new FileReader();
+  //   reader.onload = async (e) => {
+  //     isFileSelected.value = true;
+  //     await nextTick()
+  //     cropper.value.replace(e.target?.result as string);
+  //   }
+  //   reader.readAsDataURL(file.value);
+  // }
 }
 
 
