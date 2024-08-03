@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import TextInput from './TextInput.vue';
+import TextInput from './input/TextInput.vue';
 
 </script>
 
