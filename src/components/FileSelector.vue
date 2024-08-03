@@ -2,17 +2,26 @@
   <div class="flex">
     <input type="text" v-model="link" placeholder="YouTube url" class="w-full px-4 rounded-md"/>
     <button @click="download" class="ml-4">Download</button>
-    <button @click="file" class="ml-4">SelectFile</button>
+    <FileSelect
+      v-model="filename"
+      text="Select File"
+      filterName="MP3 files"
+      :extensions="['mp3']"
+      @file-selected="openFile"
+      class="ml-4"
+    />
+    
   </div>
 </template>
 
 <script setup lang="ts">
 import { listen } from '@tauri-apps/api/event'
 import { invoke } from '@tauri-apps/api';
-import { ref } from 'vue';
+import { ref } from 'vue';;
+import FileSelect from './input/FileInput.vue';
 
 const link = ref('')
-
+const filename = ref<string>()
 
 
 const download = async () => {
@@ -28,9 +37,9 @@ const download = async () => {
   // TODO download & open with file()
 }
 
-const file = () => {
-  console.log('Editing file: ', link.value)
-  // TODO open file
+const openFile = async (fn: string) => {
+  filename.value = fn;
+  console.log('Editing file: ', filename.value)
 }
 
 

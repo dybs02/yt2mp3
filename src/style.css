@@ -90,3 +90,7 @@ input:not([type]), input[type="text"]
 .bg-color {
   background-color: #1b1b1b;
 }
+
+.bg-color-dark {
+  background-color: #131313;
+}
