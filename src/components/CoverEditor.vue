@@ -35,6 +35,7 @@
 </template>
 
 <script setup lang="ts">
+import { invoke } from '@tauri-apps/api';
 import 'cropperjs/dist/cropper.css';
 import { nextTick, ref } from 'vue';
 import VueCropper from 'vue-cropperjs';
@@ -57,16 +58,12 @@ const ready = () => {
 
 const openFile = async (fn: string) => {
   filename.value = fn;
-  console.log('Editing file: ', filename.value)
-  // if (file.value) {
-  //   const reader = new FileReader();
-  //   reader.onload = async (e) => {
-  //     isFileSelected.value = true;
-  //     await nextTick()
-  //     cropper.value.replace(e.target?.result as string);
-  //   }
-  //   reader.readAsDataURL(file.value);
-  // }
+  invoke('get_image_b64', { path: filename.value })
+  .then(async (response) => {
+    isFileSelected.value = true;
+    await nextTick()
+    cropper.value.replace(response as string);
+  })
 }
 
 
